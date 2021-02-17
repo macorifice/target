@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Markdown from './Markdown';
+import Card from './Card';
 
 const useStyles = makeStyles((theme) => ({
   markdown: {
@@ -23,10 +24,12 @@ export default function Main(props: { posts: any; title: any; }) {
         {title}
       </Typography>
       <Divider />
-      {posts && posts.map((post: string) => (
-        <Markdown className={classes.markdown} key={post.substring(0, 40)}>
-          {post}
-        </Markdown>
+      {posts && posts.map((post: any) => (
+        <Card title={post.title} description={post.description} longDesc={post.longDesc} createdAt={post.createdAt} />
+        // <Markdown className={classes.markdown} key={post.id}>
+        //   {post.title}
+        // </Markdown>
+        // JSON.stringify(posts)
       ))}
     </Grid>
   );

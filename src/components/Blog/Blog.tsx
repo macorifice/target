@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -17,6 +17,7 @@ import post2 from './Posts/blog-post2';
 import post3 from './Posts/blog-post3';
 import techPost1 from './Posts/tech-post1';
 import logo from '../../assets/logo_transparent.png'
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -92,6 +93,19 @@ const sidebar = {
 };
 
 export default function Blog() {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        `https://social-target-api.herokuapp.com/api/posts`
+      );
+      setposts(result.data);
+    };
+ 
+    fetchData();
+  }, []);
+
+  const [posts, setposts] = useState()
   const classes = useStyles();
 
   return (
