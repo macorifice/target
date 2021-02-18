@@ -25,7 +25,7 @@ export default function Main(props: { posts: any; title: any; }) {
       </Typography>
       <Divider />
       {posts && posts.map((post: any) => (
-        <Card title={post.title} description={post.description} longDesc={post.longDesc} createdAt={post.createdAt} />
+        <Card title={post.title} description={post.description} longDescription={post.longDescription} createdAt={post.createdAt} />
         // <Markdown className={classes.markdown} key={post.id}>
         //   {post.title}
         // </Markdown>

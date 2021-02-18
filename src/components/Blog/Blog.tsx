@@ -96,7 +96,7 @@ export default function Blog() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios(
+      const result = await axios.get(
         `https://social-target-api.herokuapp.com/api/posts`
       );
       setposts(result.data);
