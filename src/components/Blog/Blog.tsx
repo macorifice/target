@@ -97,7 +97,7 @@ export default function Blog() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
-        `https://social-target-api.herokuapp.com/api/posts`
+        `http://socialtargetapi-env.eba-ftrsnunt.eu-south-1.elasticbeanstalk.com/api/posts`
       );
       setposts(result.data);
     };

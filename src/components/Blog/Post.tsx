@@ -90,7 +90,7 @@ export default function AlertDialogSlide() {
 
   const onPost = async () => {
     try {
-      await axios.post(`https://social-target-api.herokuapp.com/api/posts`, {
+      await axios.post(`http://socialtargetapi-env.eba-ftrsnunt.eu-south-1.elasticbeanstalk.com/api/posts`, {
         title: state.title,
         description: state.description,
         longDescription: state.longDescription,
