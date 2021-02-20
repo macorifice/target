@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import moment from "moment";
-import { CardActionArea, CardHeader } from "@material-ui/core";
+import { Avatar, CardActionArea, CardHeader } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { blue } from "@material-ui/core/colors";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
@@ -14,7 +14,10 @@ import ShareIcon from "@material-ui/icons/Share";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import PostMenu from "./PostMenu";
-import Avatar from "./Avatar";
+import BadgeAvatars from "./Avatar";
+import Chip from '@material-ui/core/Chip';
+import DoneIcon from '@material-ui/icons/Done';
+
 
 const useStyles = makeStyles({
   root: {
@@ -99,10 +102,28 @@ export default function SimpleCard(props: any) {
         <CardHeader style={{
             	paddingTop : '15px'
         }}
-          avatar={<Avatar />}
-          // action={
-          //     <PostMenu />
-          // }
+          avatar={<BadgeAvatars />}
+          action={
+              // <PostMenu />
+              <>
+              <Chip
+                avatar={<Avatar>{props.categoryLetter}</Avatar>}
+                label={props.category}
+                clickable
+                color="primary"
+                // onDelete={handleDelete}
+                deleteIcon={<DoneIcon />}
+              />
+              <Chip style={{marginLeft: '10px'}}
+                avatar={<Avatar>{props.secondCategoryLetter}</Avatar>}
+                label={props.secondCategory}
+                clickable
+                color="secondary"
+                // onDelete={handleDelete}
+                deleteIcon={<DoneIcon />}
+              />
+              </>
+          }
           title={props.title}
           subheader={props.description}
         />
