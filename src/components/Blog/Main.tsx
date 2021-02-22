@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Markdown from "./Markdown";
 import Card from "./Card";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   markdown: {
@@ -13,31 +14,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0),
   },
 }));
-
-const categories = [
-  "Health",
-  "Technology",
-  "Design"
-];
-
-const secondCategories = [
-  "Politics",
-  "Opinion",
-  "Style"
-];
-
-const categoriesLetter = [
-  "H",
-  "T",
-  "D"
-];
-
-const secondCategoriesLetter = [
-  "P",
-  "O",
-  "S"
-];
-
 export default function Main(props: { posts: any; title: any }) {
   const classes = useStyles();
   const { posts, title } = props;
@@ -55,10 +31,8 @@ export default function Main(props: { posts: any; title: any }) {
             description={post.description}
             longDescription={post.longDescription}
             createdAt={post.createdAt}
-            category={categories[index]}
-            categoryLetter={categoriesLetter[index]}
-            secondCategory={secondCategories[index]}
-            secondCategoryLetter={secondCategoriesLetter[index]}
+            category={post.categoryIds ? post.categoryIds[0]: ''}
+            secondCategory={post.categoryIds ? post.categoryIds[1]: ''}
           />
           // <Markdown className={classes.markdown} key={post.id}>
           //   {post.title}

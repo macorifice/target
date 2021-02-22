@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -17,7 +17,7 @@ import PostMenu from "./PostMenu";
 import BadgeAvatars from "./Avatar";
 import Chip from '@material-ui/core/Chip';
 import DoneIcon from '@material-ui/icons/Done';
-
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -95,6 +95,30 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props: any) {
   const classes = useStyles();
+  const [state, setstate] = useState({
+    category: '', secondCategory: ''
+  })
+
+  const fetchCategory = async (categoryId: number) => {
+    const result = await axios.get(
+      `https://the-social-target.com/api/categories/${categoryId}`
+    );
+    return result.data.title;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const cat = await axios.get(
+        `https://the-social-target.com/api/categories/${props.category}`
+      );
+      const secondCat = await axios.get(
+        `https://the-social-target.com/api/categories/${props.secondCategory}`
+      );
+      setstate({category: cat.data.title, secondCategory: secondCat.data.title});
+    };
+ 
+    fetchData();
+  }, []);
 
   return (
     <CardActionArea component="a">
@@ -107,16 +131,16 @@ export default function SimpleCard(props: any) {
               // <PostMenu />
               <>
               <Chip
-                avatar={<Avatar>{props.categoryLetter}</Avatar>}
-                label={props.category}
+                avatar={<Avatar>{state.category.charAt(0)}</Avatar>}
+                label={state.category}
                 clickable
                 color="primary"
                 // onDelete={handleDelete}
                 deleteIcon={<DoneIcon />}
               />
               <Chip style={{marginLeft: '10px'}}
-                avatar={<Avatar>{props.secondCategoryLetter}</Avatar>}
-                label={props.secondCategory}
+                avatar={<Avatar>{state.secondCategory.charAt(0)}</Avatar>}
+                label={state.secondCategory}
                 clickable
                 color="secondary"
                 // onDelete={handleDelete}
