@@ -10,6 +10,7 @@ import InputBase from '@material-ui/core/InputBase';
 import AlertDialogSlide from './Post';
 import SignUp from './SignUp';
 import Login from './Login';
+import MultipleSelect from './MultiSelect';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Header(props: { sections: any; title: any; }) {
+export default function Header(props: { sections: any; title: any; onChangeSelected: any}) {
   const classes = useStyles();
   const { sections, title } = props;
 
@@ -113,7 +114,8 @@ export default function Header(props: { sections: any; title: any; }) {
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        {sections && sections.map((section: any) => (
+        <MultipleSelect sections={sections}/>
+        {/* {sections && sections.map((section: any) => (
           <Link
             color="inherit"
             noWrap
@@ -123,10 +125,10 @@ export default function Header(props: { sections: any; title: any; }) {
             className={classes.toolbarLink}
             style={{textDecoration: 'none'}}
           >
-            <Button className={classes.button} variant="outlined" size="medium">{section.title}</Button>
+            <Button onClick={() => props.onChangeSelected(section.id)} className={classes.button} variant="outlined" size="medium">{section.title}</Button>
             
           </Link>
-        ))}
+        ))} */}
       </Toolbar>
     </React.Fragment>
   );

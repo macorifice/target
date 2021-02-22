@@ -25,19 +25,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const sections = [
-  { title: 'Technology', url: '#' },
-  { title: 'Design', url: '#' },
-  { title: 'Culture', url: '#' },
-  { title: 'Business', url: '#' },
-  { title: 'Politics', url: '#' },
-  { title: 'Opinion', url: '#' },
-  { title: 'Science', url: '#' },
-  { title: 'Health', url: '#' },
-  { title: 'Style', url: '#' },
-  { title: 'Travel', url: '#' },
-];
-
 const mainFeaturedPost = {
   title: 'Title of a longer featured blog post',
   description:
@@ -65,8 +52,6 @@ const featuredPosts = [
     imageText: 'Image Text',
   },
 ];
-
-const posts: any[] | null | undefined = [post1, post2, post3];
 
 const sidebar = {
   title: 'About',
@@ -106,13 +91,38 @@ export default function Blog() {
   }, []);
 
   const [posts, setposts] = useState()
+  const [sections, setsections] = useState()
+  const [selected, setselected] = useState([])
   const classes = useStyles();
 
+  useEffect(() => {
+    console.log(selected)
+  }, [selected])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        `https://the-social-target.com/api/categories`
+      );
+      setsections(result.data);
+    };
+ 
+    fetchData();
+  }, []);
+
+  const onChangeSelected = (id: any) => {
+    // setselected(ev.target.value)
+    setselected(id)
+
+    // setposts(posts.categoryIds.filter(selected))
+
+  }
+  
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title={logo} sections={sections} />
+        <Header onChangeSelected={onChangeSelected} title={logo} sections={sections} />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>

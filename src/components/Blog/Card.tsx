@@ -99,13 +99,6 @@ export default function SimpleCard(props: any) {
     category: '', secondCategory: ''
   })
 
-  const fetchCategory = async (categoryId: number) => {
-    const result = await axios.get(
-      `https://the-social-target.com/api/categories/${categoryId}`
-    );
-    return result.data.title;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       const cat = await axios.get(
