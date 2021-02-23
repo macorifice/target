@@ -14,15 +14,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0),
   },
 }));
-export default function Main(props: { posts: any; title: any }) {
+export default function Main(props: { posts: any;}) {
   const classes = useStyles();
-  const { posts, title } = props;
+  const { posts } = props;
 
   return (
     <Grid item xs={12} md={8}>
-      <Typography variant="h6" gutterBottom>
-        {title}
-      </Typography>
       <Divider />
       {posts &&
         posts.map((post: any, index: number) => (

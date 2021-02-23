@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -79,9 +79,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Header(props: { sections: any; title: any; onChangeSelected: any}) {
+export default function Header(props: { sections: any; title: any; onChangeSelected: any; toggleChipProperty: any;}) {
   const classes = useStyles();
   const { sections, title } = props;
+
+
+
 
   return (
     <React.Fragment>
@@ -114,7 +117,7 @@ export default function Header(props: { sections: any; title: any; onChangeSelec
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        <MultipleSelect sections={sections}/>
+        <MultipleSelect toggleChipProperty={props.toggleChipProperty} sections={sections}/>
         {/* {sections && sections.map((section: any) => (
           <Link
             color="inherit"

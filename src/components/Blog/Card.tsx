@@ -174,7 +174,7 @@ export default function SimpleCard(props: any) {
             })}
           </Typography>
         </CardContent>
-        <CardActions>
+        {/* <CardActions>
           <div style={{ marginLeft: " 250px" }}>
             <div
               style={{
@@ -223,7 +223,7 @@ export default function SimpleCard(props: any) {
               ></Button>
             </div>
           </div>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </CardActionArea>
   );

@@ -36,6 +36,7 @@ const mainFeaturedPost = {
 
 const featuredPosts = [
   {
+    id: 1,
     title: 'Featured post',
     date: 'Nov 12',
     description:
@@ -44,6 +45,7 @@ const featuredPosts = [
     imageText: 'Image Text',
   },
   {
+    id: 2,
     title: 'Post title',
     date: 'Nov 11',
     description:
@@ -117,21 +119,28 @@ export default function Blog() {
     // setposts(posts.categoryIds.filter(selected))
 
   }
+
+  const [selectedChip, setselectedchip] = useState(0)
+
+  const toggleChipProperty = (key: number) => {
+    setselectedchip(key);
+    console.log(key)
+  }
   
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header onChangeSelected={onChangeSelected} title={logo} sections={sections} />
+        <Header toggleChipProperty={toggleChipProperty} onChangeSelected={onChangeSelected} title={logo} sections={sections} />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <Grid container spacing={4}>
             {featuredPosts.map((post) => (
-              <FeaturedPost key={post.title} post={post} />
+              <FeaturedPost key={post.id} post={post} />
             ))}
           </Grid>
           <Grid container spacing={5} className={classes.mainGrid}>
-            <Main title="" posts={posts} />
+            <Main posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}
