@@ -29,7 +29,7 @@ const mainFeaturedPost = {
   title: "Title of a longer featured blog post",
   description:
     "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
-  image: "https://source.unsplash.com/weekly?politics",
+  image: "https://picsum.photos/500/100",
   imgText: "main image description",
   linkText: "Continue reading…",
 };
@@ -41,7 +41,7 @@ const featuredPosts = [
     date: "Nov 12",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/weekly?tech",
+    image: "https://picsum.photos/500/200",
     imageText: "Image Text",
   },
   {
@@ -50,7 +50,7 @@ const featuredPosts = [
     date: "Nov 11",
     description:
       "This is a wider card with supporting text below as a natural lead-in to additional content.",
-    image: "https://source.unsplash.com/weekly?design",
+    image: "https://picsum.photos/500/300",
     imageText: "Image Text",
   },
 ];
@@ -82,6 +82,7 @@ const sidebar = {
 export default function Blog() {
   const [posts, setposts] = useState([]);
   const [sections, setsections] = useState();
+  const [loading, setLoading] = useState(false);
   const [selectedChip, setselectedchip] = useState(0);
   const classes = useStyles();
 
@@ -90,20 +91,20 @@ export default function Blog() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setTimeout(async () => {
-        const result = await axios.get(
-          `https://the-social-target.com/api/posts`
-        );
-        setposts(
-          result.data.filter(
-            (post: { fk_category: number }) => post.fk_category === selectedChip
-          )
-        );
-      }, 2500);
-    };
+    setLoading(true);
+    const timer = setTimeout(async () => {
+      const result = await axios.get(
+        `https://the-social-target.com/api/posts`
+      );
+      setposts(
+        result.data.filter(
+          (post: { fk_category: number }) => post.fk_category === selectedChip
+        )
+      );
+      setLoading(false);
+    }, 3000);
 
-    fetchData();
+    return () => clearTimeout(timer);
   }, [selectedChip]);
 
   return (
@@ -124,7 +125,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} className={classes.mainGrid}>
-            <Main posts={posts} />
+            <Main loading={loading} posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}

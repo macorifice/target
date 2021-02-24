@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   toolbarSecondary: {
     justifyContent: 'space-between',
     overflowX: 'auto',
+    margin: '10px'
   },
   toolbarLink: {
     padding: theme.spacing(1),

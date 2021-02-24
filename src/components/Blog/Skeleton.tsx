@@ -23,68 +23,63 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface MediaProps {
+  description?: string;
+  backgroundImg?: string;
+  subheader?: string;
+  avatar?: string;
+  title?: string;
   loading?: boolean;
 }
 
-function Media(props: MediaProps) {
-  const { loading = false } = props;
+export default function Media(props: MediaProps) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          loading ? (
+          props.loading ? (
             <Skeleton variant="circle" width={40} height={40} />
           ) : (
             <Avatar
-              alt="Ted talk"
-              src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+              alt="avatar"
+              src={props.avatar}
             />
           )
         }
         action={
-          loading ? null : (
+          props.loading ? null : (
             <IconButton aria-label="settings">
               <MoreVertIcon />
             </IconButton>
           )
         }
-        title={loading ? <Skeleton height={6} width="80%" /> : 'Ted'}
-        subheader={loading ? <Skeleton height={6} width="40%" /> : '5 hours ago'}
+        title={props.loading ? <Skeleton height={6} width="80%" /> : props.title}
+        subheader={props.loading ? <Skeleton height={6} width="40%" /> : props.subheader}
       />
-      {loading ? (
+      {props.loading ? (
         <Skeleton variant="rect" className={classes.media} />
       ) : (
         <CardMedia
           className={classes.media}
-          image="https://pi.tedcdn.com/r/talkstar-photos.s3.amazonaws.com/uploads/72bda89f-9bbf-4685-910a-2f151c4f3a8a/NicolaSturgeon_2019T-embed.jpg?w=512"
-          title="Ted talk"
+          image={props.backgroundImg}
+          title={props.title}
         />
       )}
       <CardContent>
-        {loading ? (
+        {props.loading ? (
           <React.Fragment>
-            <Skeleton height={6} />
-            <Skeleton height={6} width="80%" />
-          </React.Fragment>
+          <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
+          <Skeleton animation="wave" height={10} width="80%" />
+        </React.Fragment>
         ) : (
           <Typography variant="body2" color="textSecondary" component="p">
             {
-              "Why First Minister of Scotland Nicola Sturgeon thinks GDP is the wrong measure of a country's success:"
+              props.description
             }
           </Typography>
         )}
       </CardContent>
     </Card>
-  );
-}
-
-export default function Facebook() {
-  return (
-    <div>
-      <Media loading />
-      <Media />
-    </div>
   );
 }

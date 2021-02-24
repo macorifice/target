@@ -17,27 +17,36 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 0),
   },
 }));
-export default function Main(props: { posts: any;}) {
+export default function Main(props: { posts: any; loading: boolean; }) {
   const classes = useStyles();
-  const { posts } = props;
+  const { posts, loading } = props;
 
   return (
     <Grid item xs={12} md={8}>
       <Divider />
       {!_.isEmpty(posts) ?
         posts.map((post: any, index: number) => (
-          <Card
-            key={index}
-            title={post.title}
-            description={post.description}
-            longDescription={post.longDescription}
-            createdAt={post.createdAt}
-            category={post.category.title}
-          />
+          // <Card
+          //   key={index}
+          //   title={post.title}
+          //   description={post.description}
+          //   longDescription={post.longDescription}
+          //   createdAt={post.createdAt}
+          //   category={post.category.title}
+          // />
+          <>
+          <div style={{ display: 'flex'}}>
+          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/300' avatar='https://picsum.photos/200/500' />
+          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/400' avatar='https://picsum.photos/200/600' />
+          </div>
+          <div style={{ display: 'flex'}}>
+          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/100' avatar='https://picsum.photos/200/200' />
+          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/700' avatar='https://picsum.photos/200/800' />
+          </div>
+          </>
         )) : 
-        <div>
-          <Skeleton />
-        </div> }
+        'NO DATA FOUND'
+        }
     </Grid>
   );
 }
