@@ -95,24 +95,7 @@ const useStyles = makeStyles({
 
 export default function SimpleCard(props: any) {
   const classes = useStyles();
-  const [state, setstate] = useState({
-    category: '', secondCategory: ''
-  })
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const cat = await axios.get(
-        `https://the-social-target.com/api/categories/${props.category}`
-      );
-      const secondCat = await axios.get(
-        `https://the-social-target.com/api/categories/${props.secondCategory}`
-      );
-      setstate({category: cat.data.title, secondCategory: secondCat.data.title});
-    };
- 
-    fetchData();
-  }, []);
-
+  
   return (
     <CardActionArea component="a">
       <Card className={classes.root}>
@@ -124,21 +107,21 @@ export default function SimpleCard(props: any) {
               // <PostMenu />
               <>
               <Chip
-                avatar={<Avatar>{state.category.charAt(0)}</Avatar>}
-                label={state.category}
+                avatar={<Avatar>{props.category.charAt(0)}</Avatar>}
+                label={props.category}
                 clickable
                 color="primary"
                 // onDelete={handleDelete}
                 deleteIcon={<DoneIcon />}
               />
-              <Chip style={{marginLeft: '10px'}}
-                avatar={<Avatar>{state.secondCategory.charAt(0)}</Avatar>}
-                label={state.secondCategory}
+              {/* <Chip style={{marginLeft: '10px'}}
+                avatar={<Avatar>{props.secondCategory.charAt(0)}</Avatar>}
+                label={props.secondCategory}
                 clickable
                 color="secondary"
                 // onDelete={handleDelete}
                 deleteIcon={<DoneIcon />}
-              />
+              /> */}
               </>
           }
           title={props.title}

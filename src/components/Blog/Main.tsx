@@ -7,6 +7,9 @@ import Divider from "@material-ui/core/Divider";
 import Markdown from "./Markdown";
 import Card from "./Card";
 import axios from "axios";
+import _ from 'lodash';
+import CardCore from '@material-ui/core/Card';
+import Skeleton from "./Skeleton";
 
 const useStyles = makeStyles((theme) => ({
   markdown: {
@@ -21,21 +24,20 @@ export default function Main(props: { posts: any;}) {
   return (
     <Grid item xs={12} md={8}>
       <Divider />
-      {posts &&
+      {!_.isEmpty(posts) ?
         posts.map((post: any, index: number) => (
           <Card
+            key={index}
             title={post.title}
             description={post.description}
             longDescription={post.longDescription}
             createdAt={post.createdAt}
-            category={post.categoryIds ? post.categoryIds[0]: ''}
-            secondCategory={post.categoryIds ? post.categoryIds[1]: ''}
+            category={post.category.title}
           />
-          // <Markdown className={classes.markdown} key={post.id}>
-          //   {post.title}
-          // </Markdown>
-          // JSON.stringify(posts)
-        ))}
+        )) : 
+        <div>
+          <Skeleton />
+        </div> }
     </Grid>
   );
 }

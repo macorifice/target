@@ -79,12 +79,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Header(props: { sections: any; title: any; onChangeSelected: any; toggleChipProperty: any;}) {
+export default function Header(props: { sections: any; title: any; toggleChipProperty: any; }) {
   const classes = useStyles();
-  const { sections, title } = props;
-
-
-
+  const { title, toggleChipProperty } = props;
 
   return (
     <React.Fragment>
@@ -117,7 +114,7 @@ export default function Header(props: { sections: any; title: any; onChangeSelec
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        <MultipleSelect toggleChipProperty={props.toggleChipProperty} sections={sections}/>
+        <MultipleSelect toggleChipProperty={toggleChipProperty} />
         {/* {sections && sections.map((section: any) => (
           <Link
             color="inherit"
@@ -138,6 +135,7 @@ export default function Header(props: { sections: any; title: any; onChangeSelec
 }
 
 Header.propTypes = {
-  sections: PropTypes.array,
   title: PropTypes.string,
+  toggleChipProperty: PropTypes.func,
+  categoryId: PropTypes.number
 };

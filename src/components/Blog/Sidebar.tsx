@@ -40,7 +40,7 @@ export default function Sidebar(props: { archives: any; description: any; social
         Social
       </Typography>
       {social && social.map((network: any) => (
-        <Link display="block" variant="body1" href="#" key={network}>
+        <Link display="block" variant="body1" href="#" key={network.id}>
           <Grid container direction="row" spacing={1} alignItems="center">
             <Grid item>
               <network.icon />

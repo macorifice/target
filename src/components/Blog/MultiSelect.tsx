@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { Avatar } from '@material-ui/core';
-
+import PropTypes from 'prop-types';
+import axios from 'axios';
 interface ChipData {
   showing: boolean;
   key: number;
@@ -22,9 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0,
       backgroundColor: 'transparent'
     },
-    chip: {
-      margin: theme.spacing(0.5),
-    },
     active: {
       backgroundColor: theme.palette.primary.main,
       color:"white",
@@ -41,45 +39,54 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export default function ChipsArray(props: any) {
+export default function ChipsArray(props: { toggleChipProperty: any; }) {
   const classes = useStyles();
-  // const [selected, setselected] = useState(0)
+  const { toggleChipProperty } = props;
 
-  const [chipData, setChipData] = React.useState<ChipData[]>([
-    { key: 0, label: 'General', showing: true },
-    { key: 1, label: 'Technology', showing: true },
-    { key: 2, label: 'Design' , showing: true },
-    { key: 3, label: 'Culture' , showing: true },
-    { key: 4, label: 'Business' , showing: true },
-    { key: 5, label: 'Politics' , showing: true },
-    { key: 6, label: 'Opinion' , showing: true },
-    { key: 7, label: 'Science' , showing: true },
-    { key: 8, label: 'Health' , showing: true },
-    { key: 9, label: 'Style' , showing: true },
-    { key: 10, label: 'Travel' , showing: true }
-  ]);
+  // { key: 0, label: 'General', showing: true },
+  // { key: 1, label: 'Technology', showing: true },
+  // { key: 2, label: 'Design' , showing: true },
+  // { key: 3, label: 'Culture' , showing: true },
+  // { key: 4, label: 'Business' , showing: true },
+  // { key: 5, label: 'Politics' , showing: true },
+  // { key: 6, label: 'Opinion' , showing: true },
+  // { key: 7, label: 'Science' , showing: true },
+  // { key: 8, label: 'Health' , showing: true },
+  // { key: 9, label: 'Style' , showing: true },
+  // { key: 10, label: 'Travel' , showing: true }
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(
+        `https://the-social-target.com/api/categories`
+      );
+      setChipData(result.data);
+    };
+ 
+    fetchData();
+  }, []);
+
+  const [chipData, setChipData] = useState([]);
 
   const handleDelete = (chipSelected: ChipData) => () => {
-    // setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    // setChipData((chips) => chips.filter((chip) => chip.key !== chipSelected.key));
     setcolor(!color);
   };
-
-  // const toggleChipProperty = (key: number) => {
-  //   setselected(key);
-  // }
 
   const [color, setcolor] = useState(false)
 
   return (
     <Paper component="ul" className={classes.root}>
-      {chipData.map((data) => {
+      {chipData &&
+       chipData.map((data: any) => {
         
         return (
           <li key={data.key}>
             <Chip
-              avatar={<Avatar>{data.label.charAt(0)}</Avatar>}
-              disabled={data.label === 'General' ? true : false}
-              label={data.label}
+              avatar={<Avatar>{data.title.charAt(0)}</Avatar>}
+              disabled={data.title === 'General' ? true : false}
+              label={data.title}
               // onDelete={data.label === 'General' ? undefined : handleDelete(data)}
               // onClick={handleDelete(data)}
               clickable
@@ -87,12 +94,17 @@ export default function ChipsArray(props: any) {
               // onClick={() => setcolor(true)}
               // color={data.key%2 === 0 ? 'primary': 'secondary'}
               // color={color ? 'primary': 'secondary'}
-              onClick={() => props.toggleChipProperty(data.key)}
-              className={(data.showing ? classes.active : classes.inactive )}
+              onClick={() => toggleChipProperty(data.id)}
+              className={(data.published ? classes.active : classes.inactive )}
             />
           </li>
         );
-      })}
+      })
+      }
     </Paper>
   );
 }
+
+ChipsArray.propTypes = {
+  toggleChipProperty: PropTypes.func
+};
