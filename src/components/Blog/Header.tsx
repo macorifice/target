@@ -10,7 +10,9 @@ import InputBase from '@material-ui/core/InputBase';
 import AlertDialogSlide from './Post';
 import SignUp from './SignUp';
 import Login from './Login';
+import Logout from './Logout';
 import MultipleSelect from './MultiSelect';
+import Auth from './Auth';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -85,6 +87,7 @@ export default function Header(props: { sections: any; title: any; toggleChipPro
   const { title, toggleChipProperty } = props;
 
   return (
+    <>
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
         <Typography
@@ -112,26 +115,15 @@ export default function Header(props: { sections: any; title: any; toggleChipPro
           </div>
         <SignUp />
         <Login />
+        <Logout />
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         <MultipleSelect toggleChipProperty={toggleChipProperty} />
-        {/* {sections && sections.map((section: any) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            className={classes.toolbarLink}
-            style={{textDecoration: 'none'}}
-          >
-            <Button onClick={() => props.onChangeSelected(section.id)} className={classes.button} variant="outlined" size="medium">{section.title}</Button>
-            
-          </Link>
-        ))} */}
       </Toolbar>
     </React.Fragment>
+    {/* <Auth/> */}
+    </>
   );
 }
 

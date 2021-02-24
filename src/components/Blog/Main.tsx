@@ -24,29 +24,100 @@ export default function Main(props: { posts: any; loading: boolean; }) {
   return (
     <Grid item xs={12} md={8}>
       <Divider />
-      {!_.isEmpty(posts) ?
-        posts.map((post: any, index: number) => (
-          // <Card
-          //   key={index}
-          //   title={post.title}
-          //   description={post.description}
-          //   longDescription={post.longDescription}
-          //   createdAt={post.createdAt}
-          //   category={post.category.title}
-          // />
-          <>
-          <div style={{ display: 'flex'}}>
-          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/300' avatar='https://picsum.photos/200/500' />
-          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/400' avatar='https://picsum.photos/200/600' />
-          </div>
-          <div style={{ display: 'flex'}}>
-          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/100' avatar='https://picsum.photos/200/200' />
-          <Skeleton loading={loading} key={index} title={posts.title} description={post.description} subheader={post.title} backgroundImg='https://picsum.photos/200/700' avatar='https://picsum.photos/200/800' />
-          </div>
-          </>
-        )) : 
-        'NO DATA FOUND'
-        }
+      {!_.isEmpty(posts)
+        ? posts.map((post: any, index: number) => (
+            // <Card
+            //   key={index}
+            //   title={post.title}
+            //   description={post.description}
+            //   longDescription={post.longDescription}
+            //   createdAt={post.createdAt}
+            //   category={post.category.title}
+            // />
+            <>
+              <div style={{ display: "flex" }}>
+                <Skeleton
+                  loading={loading}
+                  key={post[index]}
+                  title={post.title}
+                  description={post.description}
+                  subheader={new Date(post.createdAt).toLocaleString("default", {
+                    weekday: "long", 
+                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
+                    day: "2-digit", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    month: "long", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    year: "numeric", 
+                  })}
+                  backgroundImg="https://picsum.photos/200/300"
+                  avatar="https://picsum.photos/200/500"
+                />
+                <Skeleton
+                  loading={loading}
+                  key={post[index]}
+                  title={post.title}
+                  description={post.description}
+                  subheader={new Date(post.createdAt).toLocaleString("default", {
+                    weekday: "long", 
+                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
+                    day: "2-digit", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    month: "long", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    year: "numeric", 
+                  })}
+                  backgroundImg="https://picsum.photos/200/400"
+                  avatar="https://picsum.photos/200/600"
+                />
+              </div>
+              <div style={{ display: "flex" }}>
+                <Skeleton
+                  loading={loading}
+                  key={post[index]}
+                  title={post.title}
+                  description={post.description}
+                  subheader={new Date(post.createdAt).toLocaleString("default", {
+                    weekday: "long", 
+                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
+                    day: "2-digit", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    month: "long", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    year: "numeric", 
+                  })}
+                  backgroundImg="https://picsum.photos/200/100"
+                  avatar="https://picsum.photos/200/200"
+                />
+                <Skeleton
+                  loading={loading}
+                  key={post[index]}
+                  title={post.title}
+                  description={post.description}
+                  subheader={new Date(post.createdAt).toLocaleString("default", {
+                    weekday: "long", 
+                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
+                    day: "2-digit", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    month: "long", 
+                  })
+                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
+                    year: "numeric", 
+                  })}
+                  backgroundImg="https://picsum.photos/200/700"
+                  avatar="https://picsum.photos/200/800"
+                />
+              </div>
+            </>
+          ))
+        : "NO DATA FOUND"}
     </Grid>
   );
 }

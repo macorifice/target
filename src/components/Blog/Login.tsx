@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -19,6 +19,16 @@ import {
 
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+
+import firebase from "firebase/app";
+import "firebase/auth";
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+  IfFirebaseAuthedAnd,
+} from "@react-firebase/auth";
+import { config } from "../../config";
 
 function Copyright() {
   return (
@@ -62,7 +72,9 @@ const Transition = React.forwardRef(function Transition(
 
 export default function AlertDialogSlide() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,6 +82,13 @@ export default function AlertDialogSlide() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    await firebase.auth().signInWithEmailAndPassword(email, password);
+    setOpen(false);
+    return;
   };
 
   return (
@@ -106,6 +125,7 @@ export default function AlertDialogSlide() {
                   required
                   fullWidth
                   id="email"
+                  onChange={(e) => setEmail(e.target.value)}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -120,6 +140,7 @@ export default function AlertDialogSlide() {
                   label="Password"
                   type="password"
                   id="password"
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                 />
                 <FormControlLabel
@@ -132,9 +153,66 @@ export default function AlertDialogSlide() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick={handleSubmit}
                 >
                   Sign In
                 </Button>
+                <FirebaseAuthProvider {...config} firebase={firebase}>
+                  <div>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      onClick={() => {
+                        const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+                        firebase.auth().signInWithPopup(googleAuthProvider);
+                      }}
+                    >
+                      Continue with Google
+                    </Button>
+                    <FirebaseAuthConsumer>
+                      {({ isSignedIn, user, providerId }) => {
+                        return (
+                          <pre>
+                            {/* {JSON.stringify(
+                              { isSignedIn, user, providerId },
+                              null,
+                              2
+                            )} */}
+                          </pre>
+                        );
+                      }}
+                    </FirebaseAuthConsumer>
+                    <div>
+                      {/* <IfFirebaseAuthed>
+                        {() => {
+                          return (
+                            <div>
+                              <Button
+                                onClick={() => {
+                                  firebase.auth().signOut();
+                                }}
+                              >
+                                Sign Out
+                              </Button>
+                            </div>
+                          );
+                        }}
+                      </IfFirebaseAuthed> */}
+                      {/* <IfFirebaseAuthedAnd
+                        filter={({ providerId }) => providerId !== "anonymous"}
+                      >
+                        {({ providerId }) => {
+                          return (
+                            <div>You are authenticated with {providerId}</div>
+                          );
+                        }}
+                      </IfFirebaseAuthedAnd> */}
+                    </div>
+                  </div>
+                </FirebaseAuthProvider>
                 <Grid container>
                   <Grid item xs>
                     <Link href="#" variant="body2">

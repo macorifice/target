@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -20,6 +20,9 @@ import {
 
 import Avatar from "@material-ui/core/Avatar";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 function Copyright() {
   return (
@@ -63,7 +66,11 @@ const Transition = React.forwardRef(function Transition(
 
 export default function AlertDialogSlide() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState();
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,6 +78,13 @@ export default function AlertDialogSlide() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    if (newUser) setOpen(false);
+    return;
   };
 
   return (
@@ -130,6 +144,7 @@ export default function AlertDialogSlide() {
                       variant="outlined"
                       required
                       fullWidth
+                      onChange={(e) => setEmail(e.target.value)}
                       id="email"
                       label="Email Address"
                       name="email"
@@ -144,6 +159,7 @@ export default function AlertDialogSlide() {
                       name="password"
                       label="Password"
                       type="password"
+                      onChange={(e) => setPassword(e.target.value)}
                       id="password"
                       autoComplete="current-password"
                     />
@@ -163,6 +179,7 @@ export default function AlertDialogSlide() {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick={handleSubmit}
                 >
                   Sign Up
                 </Button>

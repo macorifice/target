@@ -13,6 +13,13 @@ import InputBase from "@material-ui/core/InputBase";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import SnackBar from "./SnackBar";
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer,
+  IfFirebaseAuthed,
+} from "@react-firebase/auth";
+import firebase from "firebase";
+import { config } from "../../config";
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -112,7 +119,38 @@ export default function AlertDialogSlide() {
   };
 
   return (
-    <div>
+    <>
+      <FirebaseAuthProvider {...config} firebase={firebase}>
+        <FirebaseAuthConsumer>
+          {({ isSignedIn, user, providerId }) => {
+            return (
+              <pre>
+                {/* {JSON.stringify({ isSignedIn, user, providerId }, null, 2)} */}
+              </pre>
+            );
+          }}
+        </FirebaseAuthConsumer>
+        <IfFirebaseAuthed>
+          {() => {
+            return (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleClickOpen}
+              >
+                Post
+              </Button>
+            );
+          }}
+        </IfFirebaseAuthed>
+        {/* <IfFirebaseAuthedAnd
+            filter={({ providerId }) => providerId !== "anonymous"}
+          >
+            {({ providerId }) => {
+              return <div>You are authenticated with {providerId}</div>;
+            }}
+          </IfFirebaseAuthedAnd> */}
+      </FirebaseAuthProvider>
       {success && (
         <SnackBar
           open={openSnackSuccess}
@@ -120,11 +158,12 @@ export default function AlertDialogSlide() {
         />
       )}
       {failed && (
-        <SnackBar open={openSnackFailed} message={`Ops, c'è stato qualche errore`} />
+        <SnackBar
+          open={openSnackFailed}
+          message={`Ops, c'è stato qualche errore`}
+        />
       )}
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Post
-      </Button>
+
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -134,24 +173,26 @@ export default function AlertDialogSlide() {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <InputBase
-            placeholder="Title for your feed..."
-            onChange={(e) => setstate({ ...state, title: e.target.value })}
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputTitle,
-            }}
-            inputProps={{ "aria-label": "title" }}
-          />
-        </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <InputBase
+              placeholder="Title for your feed..."
+              onChange={(e) => setstate({ ...state, title: e.target.value })}
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputTitle,
+              }}
+              inputProps={{ "aria-label": "title" }}
+            />
+          </div>
         </DialogTitle>
         <Divider />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Avatar />
           <InputBase
             placeholder="Short description for your feed..."
-            onChange={(e) => setstate({ ...state, description: e.target.value })}
+            onChange={(e) =>
+              setstate({ ...state, description: e.target.value })
+            }
             classes={{
               root: classes.inputRoot,
               input: classes.inputDesc,
@@ -186,6 +227,6 @@ export default function AlertDialogSlide() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }
