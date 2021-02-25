@@ -92,6 +92,7 @@ export default function AlertDialogSlide() {
       <Button
         style={{ marginRight: 10 }}
         variant="outlined"
+        startIcon={<LockOutlinedIcon/>}
         onClick={handleClickOpen}
       >
         Sign Up

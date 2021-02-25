@@ -115,14 +115,13 @@ export default function Header(props: { sections: any; title: any; toggleChipPro
           </div>
         <SignUp />
         <Login />
-        <Logout />
+        <Auth/>
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
         <MultipleSelect toggleChipProperty={toggleChipProperty} />
       </Toolbar>
     </React.Fragment>
-    {/* <Auth/> */}
     </>
   );
 }

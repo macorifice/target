@@ -18,6 +18,7 @@ import post3 from "./Posts/blog-post3";
 import techPost1 from "./Posts/tech-post1";
 import logo from "../../assets/logo_transparent.png";
 import axios from "axios";
+import Auth from "./Auth";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {

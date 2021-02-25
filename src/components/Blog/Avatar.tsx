@@ -2,6 +2,10 @@ import React from 'react';
 import Badge from '@material-ui/core/Badge';
 import Avatar from '@material-ui/core/Avatar';
 import { Theme, makeStyles, withStyles, createStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
+import { FirebaseAuthProvider, FirebaseAuthConsumer, IfFirebaseAuthed } from '@react-firebase/auth';
+import firebase from 'firebase';
+import { config } from '../../config';
 
 const StyledBadge = withStyles((theme: Theme) =>
   createStyles({
@@ -63,17 +67,53 @@ export default function BadgeAvatars() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <StyledBadge
-        overlap="circle"
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+    <>
+    <FirebaseAuthProvider {...config} firebase={firebase}>
+      <FirebaseAuthConsumer>
+        {({ isSignedIn, user, providerId }) => {
+          return (
+            <>
+                <div className={classes.root}>
+                <StyledBadge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  variant="dot"
+                >
+                  <Avatar className={classes.large} alt={user?.displayName} src={user?.photoURL} />
+                </StyledBadge>
+              </div>
+              </>
+          );
         }}
-        variant="dot"
-      >
-        <Avatar className={classes.large} alt="Stefano" src="https://www.fakeavatar.com/wp-content/uploads/2018/02/FinEyesOpenShut-480x480.jpg" />
-      </StyledBadge>
-    </div>
+      </FirebaseAuthConsumer>
+      {/* <IfFirebaseAuthed>
+        {() => {
+          return (
+            <Button
+              style={{ marginRight: 10 }}
+              variant="outlined"
+              onClick={() => {
+                firebase.auth().signOut();
+              }}
+            >
+              Sign Out
+            </Button>
+          );
+        }}
+      </IfFirebaseAuthed> */}
+      {/* <IfFirebaseAuthedAnd
+            filter={({ providerId }) => providerId !== "anonymous"}
+          >
+            {({ providerId }) => {
+              return <div>You are authenticated with {providerId}</div>;
+            }}
+          </IfFirebaseAuthedAnd> */}
+    </FirebaseAuthProvider>
+
+
+    </>
   );
 }

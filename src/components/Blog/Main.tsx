@@ -1,23 +1,28 @@
-import React, {useState,useEffect} from "react";
+import React, {  } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Markdown from "./Markdown";
-import Card from "./Card";
-import axios from "axios";
-import _ from 'lodash';
-import CardCore from '@material-ui/core/Card';
+import _ from "lodash";
 import Skeleton from "./Skeleton";
+import { Container } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   markdown: {
     ...theme.typography.body2,
     padding: theme.spacing(3, 0),
   },
+  cardGrid: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+  card: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+  },
 }));
-export default function Main(props: { posts: any; loading: boolean; }) {
+export default function Main(props: { posts: any; loading: boolean }) {
   const classes = useStyles();
   const { posts, loading } = props;
 
@@ -26,94 +31,41 @@ export default function Main(props: { posts: any; loading: boolean; }) {
       <Divider />
       {!_.isEmpty(posts)
         ? posts.map((post: any, index: number) => (
-            // <Card
-            //   key={index}
-            //   title={post.title}
-            //   description={post.description}
-            //   longDescription={post.longDescription}
-            //   createdAt={post.createdAt}
-            //   category={post.category.title}
-            // />
             <>
-              <div style={{ display: "flex" }}>
-                <Skeleton
-                  loading={loading}
-                  key={post[index]}
-                  title={post.title}
-                  description={post.description}
-                  subheader={new Date(post.createdAt).toLocaleString("default", {
-                    weekday: "long", 
-                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
-                    day: "2-digit", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    month: "long", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    year: "numeric", 
-                  })}
-                  backgroundImg="https://picsum.photos/200/300"
-                  avatar="https://picsum.photos/200/500"
-                />
-                <Skeleton
-                  loading={loading}
-                  key={post[index]}
-                  title={post.title}
-                  description={post.description}
-                  subheader={new Date(post.createdAt).toLocaleString("default", {
-                    weekday: "long", 
-                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
-                    day: "2-digit", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    month: "long", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    year: "numeric", 
-                  })}
-                  backgroundImg="https://picsum.photos/200/400"
-                  avatar="https://picsum.photos/200/600"
-                />
-              </div>
-              <div style={{ display: "flex" }}>
-                <Skeleton
-                  loading={loading}
-                  key={post[index]}
-                  title={post.title}
-                  description={post.description}
-                  subheader={new Date(post.createdAt).toLocaleString("default", {
-                    weekday: "long", 
-                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
-                    day: "2-digit", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    month: "long", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    year: "numeric", 
-                  })}
-                  backgroundImg="https://picsum.photos/200/100"
-                  avatar="https://picsum.photos/200/200"
-                />
-                <Skeleton
-                  loading={loading}
-                  key={post[index]}
-                  title={post.title}
-                  description={post.description}
-                  subheader={new Date(post.createdAt).toLocaleString("default", {
-                    weekday: "long", 
-                  }) + ' , ' + new Date(post.createdAt).toLocaleString("default", {
-                    day: "2-digit", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    month: "long", 
-                  })
-                  + ' ' + new Date(post.createdAt).toLocaleString("default", {
-                    year: "numeric", 
-                  })}
-                  backgroundImg="https://picsum.photos/200/700"
-                  avatar="https://picsum.photos/200/800"
-                />
+              <div className="row">
+                <div className="column">
+                  <Container className={classes.cardGrid} maxWidth="md">
+                    <Grid container>
+                      <Grid item key={index} xs={12} sm={12} md={12}>
+                        <Skeleton
+                          loading={loading}
+                          key={post[index]}
+                          title={post.title}
+                          description={post.description}
+                          subheader={
+                            new Date(post.createdAt).toLocaleString("default", {
+                              weekday: "long",
+                            }) +
+                            " , " +
+                            new Date(post.createdAt).toLocaleString("default", {
+                              day: "2-digit",
+                            }) +
+                            " " +
+                            new Date(post.createdAt).toLocaleString("default", {
+                              month: "long",
+                            }) +
+                            " " +
+                            new Date(post.createdAt).toLocaleString("default", {
+                              year: "numeric",
+                            })
+                          }
+                          backgroundImg="https://picsum.photos/200/300"
+                          avatar="https://picsum.photos/200/500"
+                        />
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </div>
               </div>
             </>
           ))

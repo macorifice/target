@@ -29,6 +29,7 @@ import {
   IfFirebaseAuthedAnd,
 } from "@react-firebase/auth";
 import { config } from "../../config";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 function Copyright() {
   return (
@@ -96,6 +97,7 @@ export default function AlertDialogSlide() {
       <Button
         style={{ marginRight: 10 }}
         variant="outlined"
+        startIcon={<AccountCircleIcon/>}
         onClick={handleClickOpen}
       >
         Login
@@ -159,7 +161,7 @@ export default function AlertDialogSlide() {
                 </Button>
                 <FirebaseAuthProvider {...config} firebase={firebase}>
                   <div>
-                    <Button
+                    {/* <Button
                       type="submit"
                       fullWidth
                       variant="contained"
@@ -171,7 +173,7 @@ export default function AlertDialogSlide() {
                       }}
                     >
                       Continue with Google
-                    </Button>
+                    </Button> */}
                     <FirebaseAuthConsumer>
                       {({ isSignedIn, user, providerId }) => {
                         return (

@@ -20,6 +20,8 @@ import {
 } from "@react-firebase/auth";
 import firebase from "firebase";
 import { config } from "../../config";
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import Select from "./Select";
 
 const useStyles = makeStyles((theme) => ({
   inputRoot: {
@@ -101,6 +103,7 @@ export default function AlertDialogSlide() {
         title: state.title,
         description: state.description,
         longDescription: state.longDescription,
+        fk_category: category,
         published: true,
       });
       setsuccess(true);
@@ -116,6 +119,13 @@ export default function AlertDialogSlide() {
         setopensnackfailed(false);
       }, 2500);
     }
+  };
+
+  const [category, setcategory] = React.useState('');
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    console.log(event.target.value)
+    setcategory(event.target.value as string);
   };
 
   return (
@@ -136,6 +146,7 @@ export default function AlertDialogSlide() {
               <Button
                 variant="outlined"
                 color="primary"
+                startIcon={<PostAddIcon/>}
                 onClick={handleClickOpen}
               >
                 Post
@@ -199,7 +210,9 @@ export default function AlertDialogSlide() {
             }}
             inputProps={{ "aria-label": "description" }}
           />
+          
         </div>
+        <Select handleChange={handleChange} category={category}/>
         <DialogContent>
           <DialogContentText
             style={{ opacity: "80%" }}
