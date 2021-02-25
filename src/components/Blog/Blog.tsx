@@ -80,28 +80,38 @@ const sidebar = {
   ],
 };
 
+interface ChipData {
+  id: number,
+  title: string,
+  published: boolean,
+}
+
+
 export default function Blog() {
-  const [posts, setposts] = useState([]);
+  const [posts, setposts] = useState([{}]);
   const [sections, setsections] = useState();
   const [loading, setLoading] = useState(false);
-  const [selectedChip, setselectedchip] = useState(0);
+  const [selectedChip, setselectedchip] = useState<ChipData[]>([]);
   const classes = useStyles();
 
-  const toggleChipProperty = (key: number) => {
-    setselectedchip(key);
+  const toggleChipProperty = (chip: any): void => {
+    setselectedchip(chip);
   };
 
   useEffect(() => {
     setLoading(true);
     const timer = setTimeout(async () => {
-      const result = await axios.get(
-        `https://the-social-target.com/api/posts`
-      );
-      setposts(
-        result.data.filter(
-          (post: { fk_category: number }) => post.fk_category === selectedChip
-        )
-      );
+      const result = await axios.get(`https://the-social-target.com/api/posts`);
+
+      selectedChip.forEach((chip, index) => {
+        setposts([
+          ...posts,
+          result.data.filter(
+            (post: { fk_category: number }) =>
+              post.fk_category === selectedChip[index]?.id
+          ),
+        ]);
+      });
       setLoading(false);
     }, 3000);
 
@@ -113,7 +123,7 @@ export default function Blog() {
       <CssBaseline />
       <Container maxWidth="lg">
         <Header
-          categoryId={selectedChip}
+          // categoryId={selectedChip}
           toggleChipProperty={toggleChipProperty}
           title={logo}
           sections={sections}

@@ -13,6 +13,7 @@ import Login from './Login';
 import Logout from './Logout';
 import MultipleSelect from './MultiSelect';
 import Auth from './Auth';
+import BottomNav from './BottomNav';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -119,7 +120,8 @@ export default function Header(props: { sections: any; title: any; toggleChipPro
         <AlertDialogSlide />
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        <MultipleSelect toggleChipProperty={toggleChipProperty} />
+        {/* <MultipleSelect toggleChipProperty={toggleChipProperty} /> */}
+        <BottomNav toggleChipProperty={toggleChipProperty} />
       </Toolbar>
     </React.Fragment>
     </>

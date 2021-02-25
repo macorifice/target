@@ -6,6 +6,8 @@ import TagFacesIcon from '@material-ui/icons/TagFaces';
 import { Avatar } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import CheckIcon from '@material-ui/icons/Check';
+import StarIcon from '@material-ui/icons/Star';
 interface ChipData {
   showing: boolean;
   key: number;
@@ -67,14 +69,19 @@ export default function ChipsArray(props: { toggleChipProperty: any; }) {
     fetchData();
   }, []);
 
-  const [chipData, setChipData] = useState([]);
+  const [chipData, setChipData] = useState<ChipData[]>([]);
+  const [state, setstate] = useState<ChipData[]>([]);
+  const [chipColor, setChipColor] = useState<boolean>(true);
 
-  const handleDelete = (chipSelected: ChipData) => () => {
-    // setChipData((chips) => chips.filter((chip) => chip.key !== chipSelected.key));
-    setcolor(!color);
+  // const handleDelete = (chipSelected: ChipData) => () => {
+  //   setChipData((chips) => chips.filter((chip) => chip.key !== chipSelected.key));
+  // };
+
+  const addChip = (showing: boolean, key: number, label: string): void => {
+    const newChip: ChipData[] = [...state, { showing, key, label }];
+    setstate(newChip);
+    setChipColor(false)
   };
-
-  const [color, setcolor] = useState(false)
 
   return (
     <Paper component="ul" className={classes.root}>
@@ -82,22 +89,21 @@ export default function ChipsArray(props: { toggleChipProperty: any; }) {
        chipData.map((data: any) => {
         
         return (
-          <li key={data.key}>
             <Chip
-              avatar={<Avatar>{data.title.charAt(0)}</Avatar>}
-              disabled={data.title === 'General' ? true : false}
+              key={data.id}
+              // avatar={<Avatar>{data.title.charAt(0)}</Avatar>}
+              color={chipColor ? 'primary' : 'secondary'}
               label={data.title}
+              icon={chipColor ? <CheckIcon/> : <StarIcon/>}
               // onDelete={data.label === 'General' ? undefined : handleDelete(data)}
               // onClick={handleDelete(data)}
-              clickable
+              // clickable
               // className={classes.chip}
               // onClick={() => setcolor(true)}
-              // color={data.key%2 === 0 ? 'primary': 'secondary'}
-              // color={color ? 'primary': 'secondary'}
-              onClick={() => toggleChipProperty(data.id)}
+              // onClick={() => toggleChipProperty(data.id)}
+              onClick={() => addChip(true, data.id, data.title)}
               className={(data.published ? classes.active : classes.inactive )}
             />
-          </li>
         );
       })
       }

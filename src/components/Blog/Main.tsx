@@ -40,22 +40,22 @@ export default function Main(props: { posts: any; loading: boolean }) {
                         <Skeleton
                           loading={loading}
                           key={post[index]}
-                          title={post.title}
-                          description={post.description}
+                          title={post[0]?.title}
+                          description={post[0]?.description}
                           subheader={
-                            new Date(post.createdAt).toLocaleString("default", {
+                            new Date(post[0]?.createdAt).toLocaleString("default", {
                               weekday: "long",
                             }) +
                             " , " +
-                            new Date(post.createdAt).toLocaleString("default", {
+                            new Date(post[0]?.createdAt).toLocaleString("default", {
                               day: "2-digit",
                             }) +
                             " " +
-                            new Date(post.createdAt).toLocaleString("default", {
+                            new Date(post[0]?.createdAt).toLocaleString("default", {
                               month: "long",
                             }) +
                             " " +
-                            new Date(post.createdAt).toLocaleString("default", {
+                            new Date(post[0]?.createdAt).toLocaleString("default", {
                               year: "numeric",
                             })
                           }
